@@ -14,6 +14,9 @@ func main() {
 
 	http.HandleFunc("/query", handlers.UserHandler(database))
 
+	fs := http.FileServer(http.Dir("Static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
 	log.Println("サーバ起動中 :8080")
 	http.ListenAndServe(":8080", nil)
 }
